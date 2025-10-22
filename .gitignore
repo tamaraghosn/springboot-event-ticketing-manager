@@ -7,6 +7,9 @@ target/
 # Ignore local configuration
 src/main/resources/application.properties
 
+# Ignore environment variables
+.env
+
 
 ### STS ###
 .apt_generated
