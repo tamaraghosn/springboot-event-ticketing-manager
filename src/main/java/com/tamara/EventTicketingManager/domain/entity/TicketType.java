@@ -38,7 +38,7 @@ public class TicketType {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id")
-    private Event events;
+    private Event event;
 
     // todo tickets
 
