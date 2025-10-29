@@ -10,6 +10,7 @@ import javax.lang.model.element.Name;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +27,19 @@ public class TicketType {
     @Column(name = "id", nullable = false , updatable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TicketType that = (TicketType) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(price, that.price) && Objects.equals(totalAvailable, that.totalAvailable) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, totalAvailable, createdAt, updatedAt);
+    }
 
     @Column(name = "name", nullable = false)
     private  String name;
