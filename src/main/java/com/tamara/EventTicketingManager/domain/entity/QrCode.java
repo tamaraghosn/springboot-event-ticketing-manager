@@ -1,8 +1,7 @@
 package com.tamara.EventTicketingManager.domain.entity;
 
 
-import com.tamara.EventTicketingManager.domain.QrCodeStatusEnum;
-import com.tamara.EventTicketingManager.domain.TicketStatusEnum;
+import com.tamara.EventTicketingManager.domain.enums.QrCodeStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

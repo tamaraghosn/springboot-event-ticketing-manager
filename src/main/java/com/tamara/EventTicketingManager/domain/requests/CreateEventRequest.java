@@ -1,9 +1,7 @@
-package com.tamara.EventTicketingManager.domain.dto;
+package com.tamara.EventTicketingManager.domain.requests;
 
 
-import com.tamara.EventTicketingManager.domain.EventStatusEnum;
-import com.tamara.EventTicketingManager.domain.entity.TicketType;
-import com.tamara.EventTicketingManager.domain.entity.User;
+import com.tamara.EventTicketingManager.domain.enums.EventStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

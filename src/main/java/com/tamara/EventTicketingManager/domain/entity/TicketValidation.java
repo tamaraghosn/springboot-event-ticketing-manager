@@ -1,17 +1,14 @@
 package com.tamara.EventTicketingManager.domain.entity;
 
 
-import com.tamara.EventTicketingManager.domain.TicketStatusEnum;
-import com.tamara.EventTicketingManager.domain.TicketValidationMethodEnum;
-import com.tamara.EventTicketingManager.domain.TicketValidationStatusEnum;
+import com.tamara.EventTicketingManager.domain.enums.TicketValidationMethodEnum;
+import com.tamara.EventTicketingManager.domain.enums.TicketValidationStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 

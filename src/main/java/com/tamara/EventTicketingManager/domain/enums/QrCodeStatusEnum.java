@@ -1,4 +1,4 @@
-package com.tamara.EventTicketingManager.domain;
+package com.tamara.EventTicketingManager.domain.enums;
 
 public enum QrCodeStatusEnum {
 

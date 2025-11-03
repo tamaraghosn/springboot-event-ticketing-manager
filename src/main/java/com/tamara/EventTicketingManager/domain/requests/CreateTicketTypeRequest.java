@@ -1,4 +1,4 @@
-package com.tamara.EventTicketingManager.domain.dto;
+package com.tamara.EventTicketingManager.domain.requests;
 
 
 import lombok.AllArgsConstructor;
