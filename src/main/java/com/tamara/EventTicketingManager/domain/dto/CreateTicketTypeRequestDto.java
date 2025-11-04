@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateTicketTypeRequestDto {
 
-    @NotBlank(message = "Ticket type is required")
+    @NotBlank(message = "Ticket type name is required")
     private  String name;
 
     @NotNull(message = "Price is required")
