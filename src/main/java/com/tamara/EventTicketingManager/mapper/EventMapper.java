@@ -1,0 +1,23 @@
+package com.tamara.EventTicketingManager.mapper;
+
+
+import com.tamara.EventTicketingManager.domain.dto.CreateEventRequestDto;
+import com.tamara.EventTicketingManager.domain.dto.CreateEventResponseDto;
+import com.tamara.EventTicketingManager.domain.dto.CreateTicketTypeRequestDto;
+import com.tamara.EventTicketingManager.domain.entity.Event;
+import com.tamara.EventTicketingManager.domain.requests.CreateEventRequest;
+import com.tamara.EventTicketingManager.domain.requests.CreateTicketTypeRequest;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+
+@Mapper( componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface EventMapper {
+
+    CreateTicketTypeRequest fromDto(CreateTicketTypeRequestDto dto);
+
+    CreateEventRequest fromDto(CreateEventRequestDto dto);
+
+    CreateEventResponseDto toDto(Event event);
+
+
+}
