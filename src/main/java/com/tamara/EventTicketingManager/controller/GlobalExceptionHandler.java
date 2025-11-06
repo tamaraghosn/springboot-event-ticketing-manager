@@ -12,6 +12,27 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorDto> handleConstraintViolation (ConstraintViolationException ex){
+
+        log.error("Caught ConstraintViolationException", ex);
+
+        String errorMessage = ex.getConstraintViolations().stream()
+                .findFirst()
+                .map(violation ->
+                        violation.getPropertyPath() + ": " + violation.getMessage())
+                .orElse("Constraint Violation Occured");
+
+
+
+        ErrorDto errorDto = ErrorDto.builder()
+                .error(errorMessage)
+                .build();
+
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
     
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDto> handleException(Exception ex){
