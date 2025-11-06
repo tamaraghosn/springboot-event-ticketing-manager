@@ -1,6 +1,7 @@
 package com.tamara.EventTicketingManager.controller;
 
 import com.tamara.EventTicketingManager.domain.dto.ErrorDto;
+import com.tamara.EventTicketingManager.exception.UserNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,18 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
 
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleUserNotFoundException (UserNotFoundException ex){
+
+        log.error("Caught UserNotFoundException", ex);
+
+        ErrorDto errorDto = ErrorDto.builder()
+                .error("User not found")
+                .build();
+
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDto> handleMethodArgumentNotValidException (MethodArgumentNotValidException ex){
