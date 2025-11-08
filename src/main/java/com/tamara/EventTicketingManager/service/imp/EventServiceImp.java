@@ -28,6 +28,9 @@ public class EventServiceImp implements EventService {
     public Event createEvent(UUID organizerId, CreateEventRequest eventRequest) {
         User organizer = userRepository.findById(organizerId).orElseThrow( () -> new UserNotFoundException(String.format("User with ID '%s' not found", organizerId)));
 
+
+        Event eventToCreate = new Event();
+
         List<TicketType> ticketTypesToCreate = eventRequest.getTicketTypes().stream().map(
                 ticketType -> {
                     TicketType ticketTypeToCreate = new TicketType();
@@ -35,15 +38,15 @@ public class EventServiceImp implements EventService {
                     ticketTypeToCreate.setPrice(ticketType.getPrice());
                     ticketTypeToCreate.setDescription(ticketType.getDescription());
                     ticketTypeToCreate.setTotalAvailable(ticketType.getTotalAvailable());
-
+                    ticketTypeToCreate.setEvent(eventToCreate);
                     return  ticketTypeToCreate;
                 }
         ).toList();
 
-        Event eventToCreate = new Event();
-        eventToCreate.setName(eventToCreate.getName());
-        eventToCreate.setStart(eventToCreate.getStart());
-        eventToCreate.setEnd(eventToCreate.getEnd());
+
+        eventToCreate.setName(eventRequest.getName());
+        eventToCreate.setStart(eventRequest.getStart());
+        eventToCreate.setEnd(eventRequest.getEnd());
         eventToCreate.setVenue(eventRequest.getVenue());
         eventToCreate.setSalesStart(eventRequest.getSalesStart());
         eventToCreate.setSalesEnd(eventRequest.getSalesEnd());

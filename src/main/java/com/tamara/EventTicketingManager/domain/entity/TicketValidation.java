@@ -49,7 +49,7 @@ public class TicketValidation {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "ticket_id")
+    @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
     @CreatedDate
