@@ -1,10 +1,9 @@
 package com.tamara.EventTicketingManager.mapper;
 
 
-import com.tamara.EventTicketingManager.domain.dto.CreateEventRequestDto;
-import com.tamara.EventTicketingManager.domain.dto.CreateEventResponseDto;
-import com.tamara.EventTicketingManager.domain.dto.CreateTicketTypeRequestDto;
+import com.tamara.EventTicketingManager.domain.dto.*;
 import com.tamara.EventTicketingManager.domain.entity.Event;
+import com.tamara.EventTicketingManager.domain.entity.TicketType;
 import com.tamara.EventTicketingManager.domain.requests.CreateEventRequest;
 import com.tamara.EventTicketingManager.domain.requests.CreateTicketTypeRequest;
 import org.mapstruct.Mapper;
@@ -19,5 +18,8 @@ public interface EventMapper {
 
     CreateEventResponseDto toDto(Event event);
 
+    ListEventResponseDto toListEventResponseDto(Event event);
+
+    ListEventTicketTypeResponseDto toDto(TicketType ticketType);
 
 }

@@ -9,6 +9,8 @@ import com.tamara.EventTicketingManager.repository.EventRepository;
 import com.tamara.EventTicketingManager.repository.UserRepository;
 import com.tamara.EventTicketingManager.service.EventService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,5 +57,10 @@ public class EventServiceImp implements EventService {
         eventToCreate.setTicketTypes(ticketTypesToCreate);
 
          return  eventRepository.save(eventToCreate);
+    }
+
+    @Override
+    public Page<Event> listEventsForOrganizer(UUID organizerId, Pageable pageable) {
+       return eventRepository.findByOrganizerId(organizerId, pageable);
     }
 }
