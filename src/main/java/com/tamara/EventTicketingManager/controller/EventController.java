@@ -3,6 +3,7 @@ package com.tamara.EventTicketingManager.controller;
 
 import com.tamara.EventTicketingManager.domain.dto.CreateEventRequestDto;
 import com.tamara.EventTicketingManager.domain.dto.CreateEventResponseDto;
+import com.tamara.EventTicketingManager.domain.dto.GetEventDetailsResponseDto;
 import com.tamara.EventTicketingManager.domain.dto.ListEventResponseDto;
 import com.tamara.EventTicketingManager.domain.entity.Event;
 import com.tamara.EventTicketingManager.domain.requests.CreateEventRequest;
@@ -54,6 +55,20 @@ public class EventController {
         return  ResponseEntity.ok(events.map(event -> eventMapper.toListEventResponseDto(event)));
 
     }
+
+
+    @GetMapping(path = "/{eventId}")
+    public ResponseEntity<GetEventDetailsResponseDto> getEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId
+    ){
+        UUID organizerId = parseUserId(jwt);
+        return eventService.getEventForOrganizer(organizerId, eventId)
+                .map(eventMapper::toGetEventDetailsResponseDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 
 
     public  UUID parseUserId(Jwt jwt){
