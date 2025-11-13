@@ -1,6 +1,9 @@
 package com.tamara.EventTicketingManager.controller;
 
 import com.tamara.EventTicketingManager.domain.dto.ErrorDto;
+import com.tamara.EventTicketingManager.exception.EventNotFoundException;
+import com.tamara.EventTicketingManager.exception.EventUpdateException;
+import com.tamara.EventTicketingManager.exception.TicketTypeNotFoundException;
 import com.tamara.EventTicketingManager.exception.UserNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -20,6 +23,44 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
 
+
+    @ExceptionHandler(EventUpdateException.class)
+    public ResponseEntity<ErrorDto> handleEventUpdateException (EventUpdateException ex){
+
+        log.error("Caught EventUpdateException", ex);
+
+        ErrorDto errorDto = ErrorDto.builder()
+                .error("Unable to update event")
+                .build();
+
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(TicketTypeNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleTicketTypeNotFoundException (TicketTypeNotFoundException ex){
+
+        log.error("Caught TicketTypeNotFoundException", ex);
+
+        ErrorDto errorDto = ErrorDto.builder()
+                .error("Ticket Type not found")
+                .build();
+
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleEventNotFoundException (EventNotFoundException ex){
+
+        log.error("Caught EventNotFoundException", ex);
+
+        ErrorDto errorDto = ErrorDto.builder()
+                .error("Event not found")
+                .build();
+
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorDto> handleUserNotFoundException (UserNotFoundException ex){
