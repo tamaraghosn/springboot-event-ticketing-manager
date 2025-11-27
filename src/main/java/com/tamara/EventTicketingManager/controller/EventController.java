@@ -1,12 +1,10 @@
 package com.tamara.EventTicketingManager.controller;
 
 
-import com.tamara.EventTicketingManager.domain.dto.CreateEventRequestDto;
-import com.tamara.EventTicketingManager.domain.dto.CreateEventResponseDto;
-import com.tamara.EventTicketingManager.domain.dto.GetEventDetailsResponseDto;
-import com.tamara.EventTicketingManager.domain.dto.ListEventResponseDto;
+import com.tamara.EventTicketingManager.domain.dto.*;
 import com.tamara.EventTicketingManager.domain.entity.Event;
 import com.tamara.EventTicketingManager.domain.requests.CreateEventRequest;
+import com.tamara.EventTicketingManager.domain.requests.UpdateEventRequest;
 import com.tamara.EventTicketingManager.mapper.EventMapper;
 import com.tamara.EventTicketingManager.service.EventService;
 import jakarta.validation.Valid;
@@ -67,6 +65,23 @@ public class EventController {
                 .map(eventMapper::toGetEventDetailsResponseDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping(path = "/{eventId}")
+    public ResponseEntity<UpdateEventResponseDto> updateEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId,
+            @Valid @RequestBody UpdateEventRequestDto updateEventRequestDto) {
+
+        UpdateEventRequest updateEventRequest = eventMapper.fromDto(updateEventRequestDto);
+        UUID organizerId = parseUserId(jwt);
+
+        Event updatedEvent = eventService.updateEventForOrganizer(organizerId, eventId, updateEventRequest);
+
+        UpdateEventResponseDto updateEventResponseDto = eventMapper.toUpdateEventResponseDto(updatedEvent);
+
+        return  new ResponseEntity<>(updateEventResponseDto, HttpStatus.OK);
+
     }
 
 
