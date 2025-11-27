@@ -147,7 +147,7 @@ public class EventServiceImp implements EventService {
                 existingTicket.setPrice(ticketTypeRequest.getPrice());
                 existingTicket.setDescription(ticketTypeRequest.getDescription());
                 existingTicket.setTotalAvailable(ticketTypeRequest.getTotalAvailable());
-               
+
 
             } else {
                 // Ticket type not found

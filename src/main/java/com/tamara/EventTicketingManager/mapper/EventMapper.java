@@ -6,6 +6,8 @@ import com.tamara.EventTicketingManager.domain.entity.Event;
 import com.tamara.EventTicketingManager.domain.entity.TicketType;
 import com.tamara.EventTicketingManager.domain.requests.CreateEventRequest;
 import com.tamara.EventTicketingManager.domain.requests.CreateTicketTypeRequest;
+import com.tamara.EventTicketingManager.domain.requests.UpdateEventRequest;
+import com.tamara.EventTicketingManager.domain.requests.UpdateTicketTypeRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -25,5 +27,13 @@ public interface EventMapper {
     GetEventDetailsResponseDto toGetEventDetailsResponseDto(Event event);
 
     GetEventTicketTypeDetailsResponseDto toGetEventTicketTypeDetailsResponseDto(TicketType ticketType);
+
+    UpdateTicketTypeRequest fromDto(UpdateTicketTypeRequestDto dto);
+
+    UpdateEventRequest fromDto(UpdateEventRequestDto dto);
+
+    UpdateTicketTypeResponseDto toUpdateTicketTypeResponseDto(TicketType ticketType);
+
+    UpdateEventResponseDto toUpdateEventResponseDto(Event event);
 
 }
