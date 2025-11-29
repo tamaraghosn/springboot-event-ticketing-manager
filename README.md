@@ -69,11 +69,132 @@ This ensures user records in the backend always remain synchronized with Keycloa
 
 Follow these steps to set up and run the backend locally.
 
----
-
-## 1️⃣ Clone the Repository
+## Clone the Repository
 
 ```bash
-git clone 
-cd 
+git clone https://github.com/tamaraghosn/springboot-event-ticketing-manager.git
+cd springboot-event-ticketing-manager
+```
+## Start Infrastructure (Postgres + Adminer + Keycloak)
+
+Start all required services using Docker:
+
+```bash
+docker-compose up -d
+```
+
+## Run Spring Boot
+
+Start the backend using Maven:
+
+```bash
+mvn spring-boot:run
+```
+
+## Configuration (application.properties)
+
+```properties
+spring.application.name=EventTicketingManager
+spring.datasource.url=jdbc:postgresql://localhost:5433/${POSTGRES_DB}
+spring.datasource.username=${POSTGRES_USER}
+spring.datasource.password=${POSTGRES_PASSWORD}
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:9090/realms/event-ticket-platform
+```
+# Domain Model
+
+The backend follows a clear, relational domain model to manage users, events, tickets, and validation workflows.
+
+---
+
+## 🧑 User
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | UUID | Primary identifier |
+| `name` | String | Full name of the user |
+| `email` | String | Unique user email |
+| `createdAt` | Timestamp | Audit: creation time |
+| `updatedAt` | Timestamp | Audit: last update |
+
+**Relations:**
+- `organizedEvents` → Events created by the user  
+- `attendingEvents` → Events the user purchased tickets for  
+- `staffingEvents` → Events where the user is assigned as staff  
+
+---
+
+## 🗓 Event
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | UUID | Primary identifier |
+| `name` | String | Event title |
+| `startDateTime` | DateTime | Event start |
+| `endDateTime` | DateTime | Event end |
+| `venue` | String | Event location |
+| `ticketSalesStart` | DateTime | When ticket sales open |
+| `ticketSalesEnd` | DateTime | When ticket sales close |
+| `status` | EventStatusEnum | DRAFT / PUBLISHED / ARCHIVED |
+
+**Relations:**
+- `organizer` → User who created the event  
+- `attendees` → Users attending the event  
+- `staff` → Staff assigned to the event  
+- `ticketTypes` → List of ticket categories for the event  
+
+---
+
+## 🎟 TicketType
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | String | Ticket type name (e.g., VIP, Standard) |
+| `description` | String | Optional details |
+| `price` | BigDecimal | Ticket price |
+| `totalAvailable` | Integer | Quantity available for sale |
+
+**Relation:**
+- `event` → The event this ticket type belongs to  
+
+---
+
+## 🎫 Ticket
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `status` | TicketStatusEnum | ACTIVE / USED / CANCELLED |
+
+**Relations:**
+- `ticketType` → The purchased ticket type  
+- `purchaser` → The user who bought the ticket  
+- `validations` → History of validation attempts  
+- `qrCodes` → QR codes generated for this ticket  
+
+---
+
+## 📷 QrCode
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `imageBase64` | String | Base64-encoded PNG QR code |
+
+**Relation:**
+- `ticket` → Ticket this QR code corresponds to  
+
+---
+
+## 📝 TicketValidation
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `status` | TicketValidationStatusEnum | VALID / INVALID / REVOKED |
+| `method` | TicketValidationMethod | QR / MANUAL |
+
+**Relation:**
+- `ticket` → Ticket being validated  
+
 
