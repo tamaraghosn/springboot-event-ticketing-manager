@@ -175,4 +175,10 @@ public class EventServiceImp implements EventService {
 
     }
 
+    @Override
+    public Page<Event> searchPublishedEvents(String query, Pageable pageable) {
+        return eventRepository.searchEvents(query, pageable);
+
+    }
+
 }
