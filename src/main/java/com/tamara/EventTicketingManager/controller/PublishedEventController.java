@@ -29,16 +29,16 @@ public class PublishedEventController {
 
     @GetMapping
     public ResponseEntity<Page<ListPublishedEventResponseDto>> listPublishedEvents (
-            @RequestParam(required = false) String query, // query is optional
+            @RequestParam(required = false) String q, // query is optional
             Pageable pageable){
 
         Page<Event> events;
-        if (query != null && !query.trim().isEmpty()){
-            events = eventService.searchPublishedEvents(query, pageable);
+        if (q != null && !q.trim().isEmpty()){
+            events = eventService.searchPublishedEvents(q, pageable);
         } else {
             events =  eventService.listPublishedEvents(pageable);
         }
-        
+
         return  ResponseEntity.ok(events.map(event -> eventMapper.toListPublishedEventResponseDto(event)));
 
     }
