@@ -3,6 +3,7 @@ package com.tamara.EventTicketingManager.service.imp;
 import com.tamara.EventTicketingManager.domain.entity.Event;
 import com.tamara.EventTicketingManager.domain.entity.TicketType;
 import com.tamara.EventTicketingManager.domain.entity.User;
+import com.tamara.EventTicketingManager.domain.enums.EventStatusEnum;
 import com.tamara.EventTicketingManager.domain.requests.CreateEventRequest;
 import com.tamara.EventTicketingManager.domain.requests.UpdateEventRequest;
 import com.tamara.EventTicketingManager.domain.requests.UpdateTicketTypeRequest;
@@ -166,6 +167,12 @@ public class EventServiceImp implements EventService {
     public void deleteEventForOrganizer(UUID organizerId, UUID id) {
 
         eventRepository.findByIdAndOrganizerId(id, organizerId).ifPresent(event -> eventRepository.deleteById(event.getId()));
+    }
+
+    @Override
+    public Page<Event> listPublishedEvents(Pageable pageable) {
+        return eventRepository.findByStatus(EventStatusEnum.PUBLISHED, pageable);
+
     }
 
 }

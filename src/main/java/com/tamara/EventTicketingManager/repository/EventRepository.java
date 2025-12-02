@@ -1,6 +1,7 @@
 package com.tamara.EventTicketingManager.repository;
 
 import com.tamara.EventTicketingManager.domain.entity.Event;
+import com.tamara.EventTicketingManager.domain.enums.EventStatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,8 @@ public interface EventRepository extends JpaRepository<Event, UUID> {
     Optional<Event> findByIdAndOrganizerId(UUID id, UUID organizerId);
 
     void  deleteById(UUID id);
+
+    Page<Event> findByStatus(EventStatusEnum statusEnum, Pageable pageable);
+
+
 }
