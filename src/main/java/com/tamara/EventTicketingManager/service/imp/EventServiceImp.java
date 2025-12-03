@@ -181,4 +181,9 @@ public class EventServiceImp implements EventService {
 
     }
 
+    @Override
+    public Optional<Event> getPublishedEvent(UUID id) {
+        return  eventRepository.findByIdAndStatus(id, EventStatusEnum.PUBLISHED);
+    }
+
 }

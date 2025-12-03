@@ -46,4 +46,5 @@ public interface EventRepository extends JpaRepository<Event, UUID> {
     Page<Event> searchEvents(@Param("searchTerm") String searchTerm, Pageable pageable);
 
 
+    Optional<Event> findByIdAndStatus(UUID uuid, EventStatusEnum status);
 }

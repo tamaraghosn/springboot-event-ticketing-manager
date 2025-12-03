@@ -1,6 +1,8 @@
 package com.tamara.EventTicketingManager.controller;
 
 
+import com.tamara.EventTicketingManager.domain.dto.GetEventDetailsResponseDto;
+import com.tamara.EventTicketingManager.domain.dto.GetPublishedEventDetailsResponseDto;
 import com.tamara.EventTicketingManager.domain.dto.ListEventResponseDto;
 import com.tamara.EventTicketingManager.domain.dto.ListPublishedEventResponseDto;
 import com.tamara.EventTicketingManager.domain.entity.Event;
@@ -12,10 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -42,5 +41,13 @@ public class PublishedEventController {
         return  ResponseEntity.ok(events.map(event -> eventMapper.toListPublishedEventResponseDto(event)));
 
     }
-
+    @GetMapping(path = "/{eventId}")
+    public ResponseEntity<GetPublishedEventDetailsResponseDto> getPublishedEvent(
+            @PathVariable UUID eventId
+    ){
+        return eventService.getPublishedEvent(eventId)
+                .map(eventMapper::totPublishedEventDetailsResponseDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

@@ -23,7 +23,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(authorize -> authorize
                 // allow for published events to be accessed without protection
-                        .requestMatchers(HttpMethod.GET, "/api/v1/published-events").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/published-events/**").permitAll()
                      // everything else still require authentication
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
