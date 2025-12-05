@@ -1,10 +1,7 @@
 package com.tamara.EventTicketingManager.controller;
 
 import com.tamara.EventTicketingManager.domain.dto.ErrorDto;
-import com.tamara.EventTicketingManager.exception.EventNotFoundException;
-import com.tamara.EventTicketingManager.exception.EventUpdateException;
-import com.tamara.EventTicketingManager.exception.TicketTypeNotFoundException;
-import com.tamara.EventTicketingManager.exception.UserNotFoundException;
+import com.tamara.EventTicketingManager.exception.*;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +20,17 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(QrCodeGenerationException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeGenerationException(QrCodeGenerationException ex){
+
+        log.error("Caught QrCodeGenerationException", ex);
+
+        ErrorDto errorDto = ErrorDto.builder()
+                .error("Unable to generate QR code")
+                .build();
+
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler(EventUpdateException.class)
     public ResponseEntity<ErrorDto> handleEventUpdateException (EventUpdateException ex){
