@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/api/v1/events/event-id/ticket-types")
+@RequestMapping(path = "/api/v1/events/{eventId}/ticket-types")
 @RequiredArgsConstructor
 public class TicketTypeController {
 

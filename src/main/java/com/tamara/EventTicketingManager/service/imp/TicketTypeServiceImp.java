@@ -27,7 +27,7 @@ public class TicketTypeServiceImp implements TicketTypeService {
     private final UserRepository userRepository;
     private final TicketRepository ticketRepository;
     private final TicketTypeRepository ticketTypeRepository;
-    private QrCodeService qrCodeService;
+    private final QrCodeService qrCodeService;
 
     @Override
     @Transactional
