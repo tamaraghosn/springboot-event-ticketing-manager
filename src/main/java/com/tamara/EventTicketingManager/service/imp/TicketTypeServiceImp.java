@@ -56,7 +56,7 @@ public class TicketTypeServiceImp implements TicketTypeService {
        Ticket newTicket = new Ticket();
        newTicket.setStatus(TicketStatusEnum.PURCHASED);
        newTicket.setTicketType(ticketType);
-       newTicket.setPurchaser(user);cm
+       newTicket.setPurchaser(user);
 
        // we need a saved ticket to create the qr code bc the id of the qr code will be the same as the uuid generated for a saved ticket
        Ticket savedTicket = ticketRepository.save(newTicket);
