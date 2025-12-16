@@ -25,6 +25,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 // allow for published events to be accessed without protection
                         .requestMatchers(HttpMethod.GET, "/api/v1/published-events/**").permitAll()
+                // Lock down all the events controller endpoints to be only access by a user with a role organizer
+                        .requestMatchers("/api/v1/events").hasRole("ORGANIZER")
                      // everything else still require authentication
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
